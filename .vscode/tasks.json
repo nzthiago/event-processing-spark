@@ -1,0 +1,117 @@
+    {
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "buildProducer",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+          "build",
+          "${workspaceFolder}/demos/producer/producer.csproj",
+          "/property:GenerateFullPaths=true",
+          "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+  },
+  {
+    "label": "buildConsumer",
+    "command": "dotnet",
+    "type": "process",
+    "args": [
+        "build",
+        "${workspaceFolder}/demos/consumer/consumer.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+    ],
+    "problemMatcher": "$msCompile"
+  },
+  {
+      "label": "clean",
+      "command": "dotnet",
+      "args": [
+        "clean",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "type": "process",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "build",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "type": "process",
+      "dependsOn": "clean",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "clean release",
+      "command": "dotnet",
+      "args": [
+        "clean",
+        "--configuration",
+        "Release",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "type": "process",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "publish",
+      "command": "dotnet",
+      "args": [
+        "publish",
+        "--configuration",
+        "Release",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "type": "process",
+      "dependsOn": "clean release",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "type": "func",
+      "dependsOn": "build",
+      "options": {
+        "cwd": "${workspaceFolder}/src/eventstreamprocessing/bin/Debug/netcoreapp3.1"
+      },
+      "command": "host start",
+      "isBackground": true,
+      "problemMatcher": "$func-dotnet-watch"
+    },
+    {
+      "label": "bicep build",
+      "type": "shell",
+      "command": "bicep build ${file}",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "arm deploy",
+      "type": "shell",
+      "command": "${workspaceFolder}/src/infra/deploy.sh",
+      "args": [
+        "${input:deployRG}"
+      ],
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "type": "promptString",
+      "id": "deployRG",
+      "default": "rg-eventProcessing",
+      "description": "Resource group to deploy to"
+    }
+  ]
+}

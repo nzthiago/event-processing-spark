@@ -1,0 +1,16 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "<value from azureWebJobsStorage in deployment Outputs>",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+
+    "Input_EH_Name": "<value from input_EH_Name in deployment Outputs>",
+    "InputEventHubConnectionString": "<value from eventHubConnectionStringListen in deployment Outputs>",
+    "Input_EH_ConsumerGroup": "<value from input_EH_ConsumerGroup in deployment Outputs>",
+
+    "Output_EH_Name": "output_EH_Name",
+    "OutputEventHubConnectionString": "<value from eventHubConnectionStringSend in deployment Outputs>",
+
+    "SENSOR_TYPE": "<value from sensoR_TYPE in deployment Outputs>"
+  }
+}

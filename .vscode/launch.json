@@ -1,0 +1,32 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": ".NET Core Launch Producer (console)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "buildProducer",
+      "program": "${workspaceFolder}/demos/producer/bin/Debug/netcoreapp3.1/producer.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/demos/producer",
+      "console": "integratedTerminal",
+      "stopAtEntry": false
+  },    {
+    "name": ".NET Core Launch Consuler (console)",
+    "type": "coreclr",
+    "request": "launch",
+    "preLaunchTask": "buildConsumer",
+    "program": "${workspaceFolder}/demos/consumer/bin/Debug/netcoreapp3.1/consumer.dll",
+    "args": [],
+    "cwd": "${workspaceFolder}/demos/consumer",
+    "console": "integratedTerminal",
+    "stopAtEntry": false
+  },
+    {
+      "name": "Attach to .NET Functions",
+      "type": "coreclr",
+      "request": "attach",
+      "processId": "${command:azureFunctions.pickProcess}"
+    }
+  ]
+}
