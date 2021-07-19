@@ -6,9 +6,9 @@ This sample implements an Azure Function written in .NET. The Function dequeues 
 
 A popular approach for an end-to-end event stream processing solution on Azure includes using the Event Hubs streaming service to receive events, and then process the events with highly scalable, Azure Event Hub-triggered Azure Functions.
 
-For separation of concern and improved throughput, this is usually implemented in multiple steps: for example, an initial Azure Function debatches and filters data from an input Event Hub and writes individual events into a second Event Hub. Then a second Function decodes, augments, and transforms the individual events and writes them to a final data store or another Event Hub for downstream processing. This Accelerator implements both those steps in one Azure Function for simplification. It transforms and filters events from the incoming XML formated telemetry events, converts and augments the filtered events into JSON, and writes each JSON event to a second Event Hub.
+For separation of concern and improved throughput, this is usually implemented in multiple steps: for example, an initial Azure Function debatches and filters data from an input Event Hub and writes individual events into a second Event Hub. Then a second Function decodes, augments, and transforms the individual events and writes them to a final data store or another Event Hub for downstream processing. This sample implements both those steps in one Azure Function for simplification. It transforms and filters events from the incoming XML formated telemetry events, converts and augments the filtered events into JSON, and writes each JSON event to a second Event Hub.
 
-![Accelerator Template](./docs/acceleratortemplate.png)
+![Sample Architecture](./docs/samplearchitecture.png)
 
 The filtering in the first event is done based on a specific sensor type, defined by the `SENSOR_TYPE` app setting. The augmentation adds information about enqueue times, processing time, and the partition from the input Event Hub to the outbound messages, as these are often needed for end to end processing time querying later.
 
@@ -45,7 +45,7 @@ This Azure Function takes an array of events from an input Azure Event Hub, and 
 
 ## Build and Deploy
 
-This Accelerator requires Azure Event Hubs, so it includes bicep language templates to generate the necessary Azure components.
+This sample requires Azure Event Hubs, so it includes bicep language templates to generate the necessary Azure components.
 
 Create a new Resource Group on Azure and then from a Bash command line with the Azure CLI installed, browse to the `infra` folder and execute [deploy.sh](event-processing-dotnet/src/infra/deploy.sh) passing in the resource group name. This will create:
 
@@ -83,7 +83,7 @@ Once the Azure assets have been created using the deploy script, you can create 
 }
 ```
 
-After this you can simply open the repository in Visual Studio Code with the Azure Functions extension and start [debugging](.vscode/launch.json). Codespaces debugging is also possible because the accelerator has a development environment [defined in a container (a devcontainer)](.devcontainer).
+After this you can simply open the repository in Visual Studio Code with the Azure Functions extension and start [debugging](.vscode/launch.json). Codespaces debugging is also possible because the sample has a development environment [defined in a container (a devcontainer)](.devcontainer).
 
 You can then send XML messages into the input event hubs to start testing the solution. There are [producer](./demos/producer) and [consumer](./demos/consumer) command line utilities provided to help. Note that both have an `appsettings.json` files to be configured. In the [Producer's configuration](./demos/producer/appsettings.json) you need the same Input Event Hub connection string and name as you configured for your Azure Function. And in the [Consumer's configuration](./demos/consumer/appsettings.json) you need the same Output Event Hub connection string and name as you configured for your Azure Function, plus the `localConsumerStorage` connection string from the `Outputs` of the deployment step.
 
