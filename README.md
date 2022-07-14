@@ -47,7 +47,7 @@ This Azure Function takes an array of events from an input Azure Event Hub, and 
 
 This sample requires Azure Event Hubs, so it includes bicep language templates to generate the necessary Azure components.
 
-Create a new Resource Group on Azure and then from a Bash command line with the Azure CLI installed, browse to the `infra` folder and execute [deploy.sh](event-processing-dotnet/src/infra/deploy.sh) passing in the resource group name. This will create:
+Create a new Resource Group on Azure and then from a Bash command line with the Azure CLI installed, browse to the `infra` folder and execute [deploy.sh](/src/infra/deploy.sh) passing in the resource group name. This will create:
 
 * An event hub namespace with two event hubs in it
 * An Azure Function App and a new Consumption App Service Plan for it. Application settings should be all pre-configured
